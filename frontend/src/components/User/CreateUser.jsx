@@ -1,4 +1,6 @@
 import React from "react";
+import { UserAPI } from "../../api/api"
+
 import {
     Avatar,
     Button,
@@ -13,57 +15,64 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import { useEffect } from "react"
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#686de0'
-        }
-    }
+            main: "#686de0",
+        },
+    },
 });
 
-
-const CreateUser = (user, setUser, createOneUser, userError, setUserError, isSubmit, setIsSubmit) => {
+const CreateUser = () => {
+    const [createUser, setCreateUser] = useState({ username: "", email: "", password: "" });
+    const [userError, setUserError] = useState({});
+    const [isSubmit, setIsSubmit] = useState(false);
 
     const history = useNavigate();
 
+    async function createOneUser() {
+        await UserAPI.createUser(createUser);
+    }
+
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setUser({...user, [name]: value});
-    }
+        setCreateUser({ ...createUser, [name]: value });
+    };
 
-    const handleCreate = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Created!")
-        // createOneUser();
-        // setUser({username: '', email: '', password: ''})
-        setUserError(validate(user));
+        console.log("Func was activated");
+        setUserError(validate(createUser));
         setIsSubmit(true);
-    }
+    };
 
-    // useEffect(() => {
-    //     console.log(userError)
-    //     if (Object.keys(userError).length === 0 && isSubmit) {
-    //         console.log(user)
-    //     }
-    // }, [userError])
+    useEffect(() => {
+        if (Object.keys(userError).length === 0 && isSubmit) {
+            createOneUser();
+        }
+    }, [userError]);
 
     const validate = (values) => {
         const errors = {};
-        const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
         if (!values.username) {
-            errors.username = "Username is required"
+            errors.username = "Username is required!";
         }
         if (!values.email) {
-            errors.email = "Email is required"
+            errors.email = "Email is required!";
+        } else if (!regex.test(values.email)) {
+            errors.email = "This is not a valid email format!";
         }
         if (!values.password) {
-            errors.password = "Password is required"
+            errors.password = "Password is required";
+        } else if (values.password.length < 8) {
+            errors.password = "Password must contains minimum 8 characters";
         }
         return errors;
-    }
+    };
 
     return (
         <ThemeProvider theme={theme}>
@@ -83,11 +92,7 @@ const CreateUser = (user, setUser, createOneUser, userError, setUserError, isSub
                     <Typography component="h1" variant="h5">
                         Sign up
                     </Typography>
-                    <Box
-                        component="form"
-                        noValidate
-                        sx={{ mt: 3 }}
-                    >
+                    <Box component="form" noValidate sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextField
@@ -96,10 +101,16 @@ const CreateUser = (user, setUser, createOneUser, userError, setUserError, isSub
                                     label="Username"
                                     autoFocus
                                     name="username"
+                                    type="text"
                                     onChange={handleChange}
-                                    value={user.username}
+                                    value={createUser.username}
                                 />
-                                {/* <Typography variant="body1" children="span">{userError.username}</Typography> */}
+                                <Typography
+                                    sx={{ color: "red" }}
+                                    variant="body2"
+                                >
+                                    {userError.username}
+                                </Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
@@ -108,9 +119,16 @@ const CreateUser = (user, setUser, createOneUser, userError, setUserError, isSub
                                     placeholder="simple@gmail.com"
                                     label="Email"
                                     name="email"
+                                    type="text"
                                     onChange={handleChange}
-                                    value={user.email}
+                                    value={createUser.email}
                                 />
+                                <Typography
+                                    sx={{ color: "red" }}
+                                    variant="body2"
+                                >
+                                    {userError.email}
+                                </Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
@@ -120,8 +138,14 @@ const CreateUser = (user, setUser, createOneUser, userError, setUserError, isSub
                                     type="password"
                                     name="password"
                                     onChange={handleChange}
-                                    value={user.password}
+                                    value={createUser.password}
                                 />
+                                <Typography
+                                    sx={{ color: "red" }}
+                                    variant="body2"
+                                >
+                                    {userError.password}
+                                </Typography>
                             </Grid>
                         </Grid>
                         <Button
@@ -130,7 +154,7 @@ const CreateUser = (user, setUser, createOneUser, userError, setUserError, isSub
                             color="primary"
                             size="large"
                             sx={{ mt: 3, mb: 2 }}
-                            onClick={handleCreate}
+                            onClick={handleSubmit}
                         >
                             Sign Up
                         </Button>

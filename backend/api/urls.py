@@ -2,10 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('users/', views.UserAPI.as_view()),
-    path('users/create/', views.UserCreateAPI.as_view()),
-    path('users/<int:pk>/update/', views.UserUpdateAPI.as_view()),
-    path('users/<int:pk>/delete/', views.UserDeleteAPI.as_view()),
     path('artists/', views.ArtistAPI.as_view()),
     path('artists/create/', views.ArtistCreateAPI.as_view()),
     path('artists/<int:pk>/update/', views.ArtistUpdateAPI.as_view()),

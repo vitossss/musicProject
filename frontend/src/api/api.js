@@ -5,13 +5,9 @@ const instance = axios.create({
 });
 
 export const UserAPI = {
-    async getUsers() {
-        const response = await instance.get("users/");
-        return response;
-    },
 
     async createUser(user) {
-        await instance.post("users/create/", {
+        await instance.post("auth/users/", {
             headers: {
                 "Content-Type": "application/json",
             },

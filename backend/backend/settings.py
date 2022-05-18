@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+import datetime
 import os
 from pathlib import Path
 
@@ -40,7 +41,10 @@ INSTALLED_APPS = [
 
     'api',
     'rest_framework',
-    'corsheaders'
+    'rest_framework.authtoken',
+    'psycopg2',
+    'corsheaders',
+    'djoser',
 ]
 
 MIDDLEWARE = [
@@ -137,4 +141,33 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = 'api.User'
+
 CORS_ALLOW_ALL_ORIGINS = True
+
+# REST FRAMEWORK SETTINGS
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DATETIME_FORMAT': "%Y-%m-%d %H:%M:%S",
+}
+
+DJOSER = {
+    "PASSWORD_RESET_CONFIRM_URL": "#/api/auth/password/reset/confirm/{uid}/{token}",
+    "ACTIVATION_URL": "#/api/auth/activate/{uid}/{token}",
+    "SEND_ACTIVATION_EMAIL": False,
+    "PASSWORD_CHANGED_EMAIL_CONFIRMATION": False,
+}
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',),
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=7),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+    'UPDATE_LAST_LOGIN': False,
+
+}

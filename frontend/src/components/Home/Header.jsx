@@ -1,117 +1,105 @@
-import React from "react";
+import React, {useContext} from "react";
+import {Link} from "react-router-dom";
+import {Context} from "../../index";
+import {observer} from "mobx-react-lite";
+
 import {
     AppBar,
     Box,
-    Toolbar,
-    IconButton,
-    InputBase,
-    Button,
+    IconButton, Menu, MenuItem,
+    Typography
 } from "@mui/material";
-import { styled, alpha } from "@mui/material/styles";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import MenuIcon from "@mui/icons-material/Menu";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SearchIcon from "@mui/icons-material/Search";
-
-import { Link } from "react-router-dom";
-
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: "#686de0",
-        },
-    },
-});
-
-const Search = styled("div")(({ theme }) => ({
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    "&:hover": {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-        marginLeft: theme.spacing(3),
-        width: "auto",
-    },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: "inherit",
-    "& .MuiInputBase-input": {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create("width"),
-        width: "100%",
-        [theme.breakpoints.up("md")]: {
-            width: "20ch",
-        },
-    },
-}));
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import {Search, SearchIconWrapper, StyledButton, StyledInputBase, StyledToolbar, UserBox} from './CustomStyles';
+import PopupState, {bindMenu, bindTrigger} from "material-ui-popup-state";
 
 const Header = () => {
+    const {store} = useContext(Context);
+
+    const handleLogout = (popupState) => {
+        store.logout()
+        // eslint-disable-next-line no-unused-expressions
+        popupState.close
+    }
+
     return (
-        <ThemeProvider theme={theme}>
-            <Box sx={{ flexGrow: 1 }}>
-                <AppBar position="static" color="primary">
-                    <Toolbar>
-                        <IconButton
-                            size="medium"
-                            edge="start"
-                            color="inherit"
-                            aria-label="open drawer"
-                            sx={{ mr: 2 }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Search>
-                            <SearchIconWrapper>
-                                <SearchIcon />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder="Search…"
-                                inputProps={{ "aria-label": "search" }}
-                            />
-                        </Search>
-                        <Box sx={{ flexGrow: 1 }} />
-                        <Box sx={{ display: { xs: "none", md: "flex" } }}>
-                            <Link to="register/">
-                                <Button
-                                    variant="text"
-                                    color="inherit"
-                                    sx={{ color: "#fff" }}
-                                >
-                                    Register
-                                </Button>
-                            </Link>
-                            <Link to="login/">
-                                <Button
-                                    variant="text"
-                                    color="inherit"
-                                    sx={{ color: "#fff" }}
-                                >
-                                    Login
-                                </Button>
-                            </Link>
-                        </Box>
-                    </Toolbar>
-                </AppBar>
-            </Box>
-        </ThemeProvider>
+        <AppBar
+            position="static"
+            sx={{bgcolor: "#000"}}
+        >
+            <StyledToolbar>
+                <IconButton
+                    size="medium"
+                    edge="start"
+                    color="inherit"
+                    aria-label="open drawer"
+                    sx={{mr: 2}}
+                >
+                    <ArrowForwardIcon/>
+                </IconButton>
+                <Search>
+                    <SearchIconWrapper>
+                        <SearchIcon/>
+                    </SearchIconWrapper>
+                    <StyledInputBase
+                        placeholder="Search…"
+                        inputProps={{"aria-label": "search"}}
+                    />
+                </Search>
+                {store.isAuth
+                    ? (
+                        <UserBox>
+                            <Typography
+                                variant="body1"
+                                sx={{marginRight: "5px"}}
+                            >
+                                {store.user.username}
+                            </Typography>
+                            <AccountCircleIcon/>
+                            <PopupState variant="popover" popupId="popup-menu">
+                                {(popupState) => (
+                                    <React.Fragment>
+                                        <IconButton
+                                            color="inherit"
+                                            size="small"
+                                            {...bindTrigger(popupState)}
+                                        >
+                                            <ArrowDropDownIcon/>
+                                        </IconButton>
+                                        <Menu {...bindMenu(popupState)}>
+                                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                        </Menu>
+                                    </React.Fragment>
+                                )}
+                            </PopupState>
+                        </UserBox>
+                    )
+                    : <Box sx={{display: {xs: "none", md: "flex"}}}>
+                        <Link to="/auth/registration">
+                            <StyledButton
+                                variant="outlined"
+                                color="secondary"
+                                sx={{mr: 2}}
+                            >
+                                Register
+                            </StyledButton>
+                        </Link>
+                        <Link to="/auth/login">
+                            <StyledButton
+                                variant="outlined"
+                                color="secondary"
+                            >
+                                Login
+                            </StyledButton>
+                        </Link>
+                    </Box>
+                }
+            </StyledToolbar>
+        </AppBar>
     );
 };
 
-export default Header;
+export default observer(Header);

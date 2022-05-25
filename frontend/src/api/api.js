@@ -1,20 +1,16 @@
 import axios from "axios";
 
+export const API_URL = "http://127.0.0.1:8000/api/"
+
 const instance = axios.create({
-    baseURL: "http://127.0.0.1:8000/api/",
+    withCredentials: true,
+    baseURL: API_URL
 });
 
-export const UserAPI = {
+instance.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token');
+    if (token) {config.headers.Authorization = `Token ${token}`}
+    return config;
+})
 
-    async createUser(user) {
-        await instance.post("auth/users/", {
-            headers: {
-                "Content-Type": "application/json",
-            },
-            username: user.username,
-            email: user.email,
-            password: user.password
-        });
-
-    }
-};
+export default instance;

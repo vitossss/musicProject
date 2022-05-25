@@ -5,26 +5,6 @@ from .serializers import UserSerializer, ArtistSerializer, AlbumsSerializer, Tra
 # Create your views here.
 
 
-class UserAPI(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-class UserCreateAPI(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-class UserUpdateAPI(generics.RetrieveUpdateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-class UserDeleteAPI(generics.DestroyAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
 class ArtistAPI(generics.ListAPIView):
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializer

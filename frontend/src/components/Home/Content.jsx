@@ -11,10 +11,11 @@ const Content = () => {
         <Box sx={{padding: "15px"}} flex={6}>
             <Routes>
                 <Route path="home" element={<Home/>}/>
-                <Route path="/main/" element={<Navigate to="home" replace />}/>
                 <Route path="library" element={<Library/>}/>
                 <Route path="liked" element={<Liked/>}/>
                 <Route path="add_album" element={<AddAlbum/>}/>
+                <Route path="/" element={<Home/>}/>
+                {/*<Route path="*" element={<Navigate to="home" replace />}/>*/}
             </Routes>
         </Box>
     )

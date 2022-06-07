@@ -32,25 +32,25 @@ const theme = createTheme({
 const App = () => {
     const {store} = useContext(Context)
 
-    useEffect(() => {
-        if (localStorage.getItem('token')) {
-            store.checkAuth()
-        }
-    }, [store])
+    // useEffect(() => {
+    //     if (localStorage.getItem('token')) {
+    //         store.checkAuth()
+    //     }
+    // }, [store])
 
     return (
         <ThemeProvider theme={theme}>
             <Routes>
                 <Route path="/" element={<PrivateRoute/>}>
-                    <Route path="/main/*" element={<HomePage/>}/>
+                    <Route path="*" element={<HomePage/>}/>
                 </Route>
-                <Route path="/dashboard" element={<PublicRoute/>}>
-                    <Route path="/dashboard" element={<Dashboard/>}/>
-                </Route>
-                <Route path="/auth" element={<PublicRoute/>}>
-                    <Route path="login" element={<LoginUser/>}/>
-                    <Route path="register" element={<CreateUser/>}/>
-                </Route>
+                {/*<Route path="/dashboard" element={<PublicRoute/>}>*/}
+                {/*    <Route path="/dashboard" element={<Dashboard/>}/>*/}
+                {/*</Route>*/}
+                {/*<Route path="/auth" element={<PublicRoute/>}>*/}
+                {/*    <Route path="login" element={<LoginUser/>}/>*/}
+                {/*    <Route path="register" element={<CreateUser/>}/>*/}
+                {/*</Route>*/}
             </Routes>
         </ThemeProvider>
     );

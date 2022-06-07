@@ -4,7 +4,8 @@ import Artist from "../../Artist/Artist";
 const Home = () => {
     return (
         <>
-            <Artist/>
+            <h1>Home</h1>
+            {/*<Artist/>*/}
         </>
     )
 }

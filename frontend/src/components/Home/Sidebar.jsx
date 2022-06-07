@@ -34,7 +34,7 @@ const Sidebar = () => {
                             isActive ? activeStyle : undefined
                         }
                         component={NavLink}
-                        to="/"
+                        to="/home"
                     >
                         <ListItemIcon sx={{color: "#fff"}}>
                             <HomeIcon/>

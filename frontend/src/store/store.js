@@ -4,7 +4,7 @@ import ApiService from "../services/ApiService";
 
 class Store {
     user = {}
-    isAuth = false
+    isAuth = true
     artists = []
 
     constructor() {

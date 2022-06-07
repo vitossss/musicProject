@@ -65,7 +65,7 @@ const Header = () => {
                                     variant="body1"
                                     sx={{marginRight: "5px"}}
                                 >
-                                    {store.user.username}
+                                    {/*{store.user.username}*/}
                                 </Typography>
                                 <AccountCircleIcon/>
                                 <PopupState variant="popover" popupId="popup-menu">

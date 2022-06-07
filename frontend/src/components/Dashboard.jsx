@@ -6,15 +6,19 @@ import bg from "./assets/image/bg.png"
 const Dashboard = () => {
     return (
         <>
-            <Header/>
             <Paper sx={{
                 width: "100vw",
-                height: "calc(100vh - 64px)",
+                height: "100vh",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
                 backgroundSize: "cover",
-                backgroundImage: `url(${bg})`
-            }}/>
+                backgroundImage: `url(${bg})`,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+            }}>
+                <Header/>
+            </Paper>
         </>
     );
 };

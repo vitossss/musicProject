@@ -13,7 +13,7 @@ class ArtistSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Artist
-        fields = ['id', 'artist_name']
+        fields = ['id', 'artist_name', 'artist_picture']
 
 
 class AlbumsSerializer(serializers.ModelSerializer):

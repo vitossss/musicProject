@@ -1,6 +1,6 @@
 from rest_framework import generics
-from .models import User, Artist, Album, Track, Like
-from .serializers import UserSerializer, ArtistSerializer, AlbumsSerializer, TracksSerializer, LikesSerializer
+from .models import Artist, Album, Track, Like
+from .serializers import ArtistSerializer, AlbumsSerializer, TracksSerializer, LikesSerializer
 
 # Create your views here.
 

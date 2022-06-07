@@ -16,4 +16,11 @@ code {
 
 a {
   text-decoration: none;
+  width: 100%;
+}
+
+.artist_img {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
 }

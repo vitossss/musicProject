@@ -28,17 +28,19 @@ class Store {
             const response = await AuthService.login(email, password);
             localStorage.setItem('token', response.data.auth_token);
             this.setAuth(true);
+            return response;
         } catch (e) {
-            console.log(e.response?.data?.message);
+            return e;
         }
     }
 
     async register(username, email, password) {
         try {
-            await AuthService.register(username, email, password);
+            const response = await AuthService.register(username, email, password);
             await this.login(email, password);
+            return response;
         } catch (e) {
-            console.log(e)
+            return e;
         }
     }
 

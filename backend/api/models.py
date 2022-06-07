@@ -59,8 +59,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Artist(models.Model):
     artist_name = models.CharField(verbose_name='Artist name', max_length=100)
-    album_picture = models.ImageField(upload_to='media/artist_img', verbose_name='Picture',
-                                      max_length=100, null=True, blank=True)
+    artist_picture = models.ImageField(upload_to='media/artist_img', verbose_name='Picture',
+                                       max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.artist_name

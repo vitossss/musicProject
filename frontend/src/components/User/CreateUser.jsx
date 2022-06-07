@@ -19,7 +19,6 @@ import {observer} from "mobx-react-lite";
 
 const CreateUser = () => {
     const [newUser, setNewUser] = useState({username: "", email: "", password: ""});
-    const [userError, setUserError] = useState({});
     const [error, setError] = useState({})
     const {store} = useContext(Context);
     const history = useNavigate()
@@ -32,36 +31,41 @@ const CreateUser = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("Func was activated");
-        const isValid = validate(newUser);
-        if (Object.keys(isValid) > 0) {
-            setUserError(isValid);
-        } else {
-            store.register(newUser.username, newUser.email, newUser.password)
-            setNewUser({username: "", email: "", password: ""})
-            setUserError({});
-            setError({});
-            history("/home")
-        }
+        store.register(newUser.username, newUser.email, newUser.password)
+            .then((response) => {
+                if (response.status === 201) {
+                    setNewUser({username: "", email: "", password: ""})
+                    history("/")
+                } else {
+                    const obj = {}
+                    const data = response.response.data
+                    const keys = Object.keys(data)
+                    for (const e in keys){
+                        obj[keys[e]] = data[keys[e]][0]
+                    }
+                    setError(obj)
+                }
+            })
     };
 
-    const validate = (values) => {
-        const errors = {};
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-        if (!values.username) {
-            errors.username = "Username is required!";
-        }
-        if (!values.email) {
-            errors.email = "Email is required!";
-        } else if (!regex.test(values.email)) {
-            errors.email = "This is not a valid email format!";
-        }
-        if (!values.password) {
-            errors.password = "Password is required";
-        } else if (values.password.length < 8) {
-            errors.password = "Password must contains minimum 8 characters";
-        }
-        return errors;
-    };
+    // const validate = (values) => {
+    //     const errors = {};
+    //     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    //     if (!values.username) {
+    //         errors.username = "Username is required!";
+    //     }
+    //     if (!values.email) {
+    //         errors.email = "Email is required!";
+    //     } else if (!regex.test(values.email)) {
+    //         errors.email = "This is not a valid email format!";
+    //     }
+    //     if (!values.password) {
+    //         errors.password = "Password is required";
+    //     } else if (values.password.length < 8) {
+    //         errors.password = "Password must contains minimum 8 characters";
+    //     }
+    //     return errors;
+    // };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -97,7 +101,6 @@ const CreateUser = () => {
                                 sx={{color: "red"}}
                                 variant="body2"
                             >
-                                {userError.username}
                                 {error?.username}
                             </Typography>
                         </Grid>
@@ -116,7 +119,6 @@ const CreateUser = () => {
                                 sx={{color: "red"}}
                                 variant="body2"
                             >
-                                {userError.email}
                                 {error?.email}
                             </Typography>
                         </Grid>
@@ -134,7 +136,6 @@ const CreateUser = () => {
                                 sx={{color: "red"}}
                                 variant="body2"
                             >
-                                {userError.password}
                                 {error?.password}
                             </Typography>
                         </Grid>

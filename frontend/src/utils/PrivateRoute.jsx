@@ -5,7 +5,7 @@ import {Navigate, Outlet} from "react-router-dom";
 
 const PrivateRoute = () => {
     const {store} = useContext(Context)
-    return store.isAuth ? <Outlet/> : <Navigate to={"/auth/login"} />
+    return store.isAuth ? <Outlet/> : <Navigate to="/dashboard" />
 }
 
 export default observer(PrivateRoute);

@@ -1,4 +1,4 @@
-import {styled, alpha, InputBase, Button, Toolbar, Box, List, ListItem} from '@mui/material'
+import {styled, alpha, InputBase, Button, Toolbar, Box, List, ListItem, Stack} from '@mui/material'
 
 export const Search = styled("div")(({theme}) => ({
     position: "relative",
@@ -37,6 +37,10 @@ export const StyledInputBase = styled(InputBase)(({theme}) => ({
 }));
 
 export const StyledButton = styled(Button)(() => ({
+    width: "300px",
+    height: "60px",
+    fontSize: 16,
+    margin: 10,
     "&:hover": {
         backgroundColor: "#686de0",
         color: "#fff"
@@ -54,7 +58,7 @@ export const UserBox = styled(Box)(() => ({
 }));
 
 export const StyledListItem = styled(ListItem)(() => ({
-    marginBottom: "20px",
+    marginBottom: "10px",
     "&:hover": {
         color: "#686de0",
         transition: "all .2s ease-out",
@@ -63,4 +67,24 @@ export const StyledListItem = styled(ListItem)(() => ({
             transition: "all .2s ease-out"
         }
     },
+}));
+
+export const ArtistStack = styled(Stack)(() => ({
+    height: "155px",
+    padding: "15px",
+    backgroundColor: "#f2f2f2",
+    borderRadius: "10px",
+    "&:hover": {
+        backgroundColor: "#e9e9e9",
+        transition: "all .1s linear"
+    }
+}));
+
+export const DashboardBox = styled(Box)(() => ({
+    width: "900px",
+    height: "600px",
+    borderRadius: "20px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
 }));

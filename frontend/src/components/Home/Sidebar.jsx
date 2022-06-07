@@ -1,6 +1,7 @@
 import React from "react";
 import {observer} from "mobx-react-lite";
 
+import {NavLink, Outlet} from "react-router-dom";
 import {
     Box, Divider, List, ListItemButton, ListItemIcon, ListItemText,
 } from "@mui/material";
@@ -11,6 +12,10 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {StyledListItem} from "./CustomStyles";
 
 const Sidebar = () => {
+    let activeStyle = {
+        backgroundColor: "rgba(104, 109, 224, 0.3)",
+    };
+
     return (
         <Box
             bgcolor={"background.default"}
@@ -19,13 +24,18 @@ const Sidebar = () => {
             sx={{
                 minHeight: `calc(100vh - 64px)`,
                 bgcolor: "#000",
-                color: "#fff",
-                zIndex: 1
+                color: "#fff"
             }}
         >
             <List>
                 <StyledListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                        style={({isActive}) =>
+                            isActive ? activeStyle : undefined
+                        }
+                        component={NavLink}
+                        to="/"
+                    >
                         <ListItemIcon sx={{color: "#fff"}}>
                             <HomeIcon/>
                         </ListItemIcon>
@@ -33,7 +43,13 @@ const Sidebar = () => {
                     </ListItemButton>
                 </StyledListItem>
                 <StyledListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                        style={({isActive}) =>
+                            isActive ? activeStyle : undefined
+                        }
+                        component={NavLink}
+                        to="library"
+                    >
                         <ListItemIcon sx={{color: "#fff"}}>
                             <LibraryMusicIcon/>
                         </ListItemIcon>
@@ -41,7 +57,13 @@ const Sidebar = () => {
                     </ListItemButton>
                 </StyledListItem>
                 <StyledListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                        style={({isActive}) =>
+                            isActive ? activeStyle : undefined
+                        }
+                        component={NavLink}
+                        to="liked"
+                    >
                         <ListItemIcon sx={{color: "#fff"}}>
                             <FavoriteIcon/>
                         </ListItemIcon>
@@ -49,7 +71,13 @@ const Sidebar = () => {
                     </ListItemButton>
                 </StyledListItem>
                 <StyledListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                        style={({isActive}) =>
+                            isActive ? activeStyle : undefined
+                        }
+                        component={NavLink}
+                        to="add_album"
+                    >
                         <ListItemIcon sx={{color: "#fff"}}>
                             <AddCircleOutlineIcon/>
                         </ListItemIcon>
@@ -58,6 +86,7 @@ const Sidebar = () => {
                 </StyledListItem>
                 <Divider sx={{bgcolor: "#444444"}}/>
             </List>
+            <Outlet/>
         </Box>
     );
 };

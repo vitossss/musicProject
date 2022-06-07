@@ -36,20 +36,20 @@ const App = () => {
         if (localStorage.getItem('token')) {
             store.checkAuth()
         }
-    }, [])
+    }, [store])
 
     return (
         <ThemeProvider theme={theme}>
             <Routes>
-                <Route path={"/home"} element={<PrivateRoute/>}>
-                    <Route path={"/home"} element={<HomePage/>}/>
+                <Route path="/" element={<PrivateRoute/>}>
+                    <Route path="/main/*" element={<HomePage/>}/>
                 </Route>
-                <Route path={"/"} element={<PublicRoute/>}>
-                    <Route path={"/"} element={<Dashboard/>}/>
+                <Route path="/dashboard" element={<PublicRoute/>}>
+                    <Route path="/dashboard" element={<Dashboard/>}/>
                 </Route>
-                <Route path={"auth"} element={<PublicRoute/>}>
-                    <Route path={"login"} element={<LoginUser/>}/>
-                    <Route path={"register"} element={<CreateUser/>}/>
+                <Route path="/auth" element={<PublicRoute/>}>
+                    <Route path="login" element={<LoginUser/>}/>
+                    <Route path="register" element={<CreateUser/>}/>
                 </Route>
             </Routes>
         </ThemeProvider>

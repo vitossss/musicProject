@@ -5,7 +5,6 @@ import Content from "./Content";
 import {Stack} from "@mui/material";
 
 const HomePage = () => {
-
     return (
         <div>
             <Header/>

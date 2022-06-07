@@ -31,30 +31,36 @@ const LoginUser = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("Func was activated");
-        const isValid = validate(loginUser);
-        if (Object.keys(isValid) > 0) {
-            setUserError(isValid);
-        } else {
-            store.login(loginUser.email, loginUser.password)
-            setLoginUser({email: "", password: ""});
-            setUserError({});
-            history("/home")
-        }
+        store.login(loginUser.email, loginUser.password)
+            .then((response) => {
+                if (response.status === 201) {
+                    setLoginUser({email: "", password: ""})
+                    history("/")
+                } else {
+                    const obj = {}
+                    const data = response.response.data
+                    const keys = Object.keys(data)
+                    for (const e in keys) {
+                        obj[keys[e]] = data[keys[e]][0]
+                    }
+                    setUserError(obj)
+                }
+            })
     };
 
-    const validate = (values) => {
-        const errors = {};
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-        if (!values.email) {
-            errors.email = "Email is required!";
-        } else if (!regex.test(values.email)) {
-            errors.email = "This is not a valid email format!";
-        }
-        if (!values.password) {
-            errors.password = "Password is required";
-        }
-        return errors;
-    };
+    // const validate = (values) => {
+    //     const errors = {};
+    //     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    //     if (!values.email) {
+    //         errors.email = "Email is required!";
+    //     } else if (!regex.test(values.email)) {
+    //         errors.email = "This is not a valid email format!";
+    //     }
+    //     if (!values.password) {
+    //         errors.password = "Password is required";
+    //     }
+    //     return errors;
+    // };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -90,7 +96,7 @@ const LoginUser = () => {
                                 sx={{color: "red"}}
                                 variant="body2"
                             >
-                                {userError.email}
+                                {userError?.email}
                             </Typography>
                         </Grid>
                         <Grid item xs={12}>
@@ -107,7 +113,7 @@ const LoginUser = () => {
                                 sx={{color: "red"}}
                                 variant="body2"
                             >
-                                {userError.password}
+                                {userError?.password}
                             </Typography>
                         </Grid>
                     </Grid>

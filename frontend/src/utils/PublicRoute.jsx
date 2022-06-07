@@ -5,7 +5,7 @@ import {Navigate, Outlet} from "react-router-dom";
 
 function PublicRoute () {
     const {store} = useContext(Context);
-    return store.isAuth ? <Navigate to={"/home"} /> : <Outlet />;
+    return store.isAuth ? <Navigate to="/" /> : <Outlet />;
 }
 
 export default observer(PublicRoute)

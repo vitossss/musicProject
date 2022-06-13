@@ -18,12 +18,13 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import {observer} from "mobx-react-lite";
 
 const CreateUser = () => {
+    const {store} = useContext(Context);
     const [newUser, setNewUser] = useState({username: "", email: "", password: ""});
     const [error, setError] = useState({})
-    const {store} = useContext(Context);
     const history = useNavigate()
 
     const handleChange = (e) => {
+
         const {name, value} = e.target;
         setNewUser({...newUser, [name]: value});
     };
@@ -33,9 +34,9 @@ const CreateUser = () => {
         console.log("Func was activated");
         store.register(newUser.username, newUser.email, newUser.password)
             .then((response) => {
-                if (response.status === 201) {
+                if (response.status === 200) {
                     setNewUser({username: "", email: "", password: ""})
-                    history("/")
+                    history("/home")
                 } else {
                     const obj = {}
                     const data = response.response.data

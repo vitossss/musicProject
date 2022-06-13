@@ -22,7 +22,7 @@ const Sidebar = () => {
             color={"text.primary"}
             flex={1}
             sx={{
-                minHeight: `calc(100vh - 64px)`,
+                minHeight: `calc(100vh - 64px - 136px)`,
                 bgcolor: "#000",
                 color: "#fff"
             }}
@@ -34,7 +34,7 @@ const Sidebar = () => {
                             isActive ? activeStyle : undefined
                         }
                         component={NavLink}
-                        to="/"
+                        to="/home"
                     >
                         <ListItemIcon sx={{color: "#fff"}}>
                             <HomeIcon/>
@@ -48,7 +48,7 @@ const Sidebar = () => {
                             isActive ? activeStyle : undefined
                         }
                         component={NavLink}
-                        to="library"
+                        to="/library"
                     >
                         <ListItemIcon sx={{color: "#fff"}}>
                             <LibraryMusicIcon/>
@@ -62,7 +62,7 @@ const Sidebar = () => {
                             isActive ? activeStyle : undefined
                         }
                         component={NavLink}
-                        to="liked"
+                        to="/liked"
                     >
                         <ListItemIcon sx={{color: "#fff"}}>
                             <FavoriteIcon/>
@@ -76,7 +76,7 @@ const Sidebar = () => {
                             isActive ? activeStyle : undefined
                         }
                         component={NavLink}
-                        to="add_album"
+                        to="/add_album"
                     >
                         <ListItemIcon sx={{color: "#fff"}}>
                             <AddCircleOutlineIcon/>

@@ -23,11 +23,19 @@ class AlbumsSerializer(serializers.ModelSerializer):
         fields = ['id', 'album_title', 'album_picture', 'release_date', 'artist']
 
 
+class TracksArtistSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Artist
+        fields = ['id', 'artist_name', 'artist_picture']
+
+
 class TracksSerializer(serializers.ModelSerializer):
+    artist = TracksArtistSerializer(many=True)
 
     class Meta:
         model = Track
-        fields = ['id', 'track_title', 'duration', 'track_url', 'track_picture', 'artist', 'album']
+        fields = ['id', 'track_title', 'track_url', 'track_picture', 'artist', 'album']
 
 
 class LikesSerializer(serializers.ModelSerializer):

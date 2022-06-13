@@ -24,3 +24,22 @@ a {
   height: 128px;
   border-radius: 50%;
 }
+
+.album_img {
+  width: 128px;
+  height: 128px;
+  border-radius: 10px;
+}
+
+.artist-img__page {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  margin-right: 20px;
+}
+
+.robi {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+}

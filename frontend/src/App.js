@@ -10,6 +10,7 @@ import Dashboard from "./components/Dashboard";
 import PrivateRoute from "./utils/PrivateRoute";
 import PublicRoute from "./utils/PublicRoute";
 import {createTheme, ThemeProvider} from "@mui/material";
+import NotFound from "./components/errors/NotFound";
 
 const theme = createTheme({
     palette: {
@@ -35,6 +36,7 @@ const App = () => {
     useEffect(() => {
         if (localStorage.getItem('token')) {
             store.checkAuth()
+            console.log()
         }
     }, [store])
 
@@ -42,15 +44,16 @@ const App = () => {
         <ThemeProvider theme={theme}>
             <Routes>
                 <Route path="/" element={<PrivateRoute/>}>
-                    <Route path="/main/*" element={<HomePage/>}/>
-                </Route>
-                <Route path="/dashboard" element={<PublicRoute/>}>
-                    <Route path="/dashboard" element={<Dashboard/>}/>
+                    <Route path="*" element={<HomePage/>}/>
                 </Route>
                 <Route path="/auth" element={<PublicRoute/>}>
                     <Route path="login" element={<LoginUser/>}/>
                     <Route path="register" element={<CreateUser/>}/>
                 </Route>
+                <Route path="/dashboard" element={<PublicRoute/>}>
+                    <Route path="/dashboard" element={<Dashboard/>}/>
+                </Route>
+                {/*<Route path="*" element={<NotFound/>} />*/}
             </Routes>
         </ThemeProvider>
     );

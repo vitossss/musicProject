@@ -70,7 +70,7 @@ export const StyledListItem = styled(ListItem)(() => ({
 }));
 
 export const ArtistStack = styled(Stack)(() => ({
-    height: "155px",
+    height: "180px",
     padding: "15px",
     backgroundColor: "#f2f2f2",
     borderRadius: "10px",

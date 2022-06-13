@@ -1,18 +1,17 @@
-import React from 'react'
+import React from 'react';
 import  "../../index.css"
-import {useContext, useEffect} from 'react'
+import {useContext, useEffect} from "react";
 import {Context} from "../../index";
-import {Link} from "react-router-dom";
-import Loading from "../UI/Loading";
 import {ArtistStack} from "../Home/CustomStyles";
-import {Box, Paper, Stack, Typography} from "@mui/material";
+import Loading from "../UI/Loading";
+import {Box, Paper, Typography} from "@mui/material";
 import {observer} from "mobx-react-lite";
 
-const Artist = () => {
+const Albums = () => {
     const {store} = useContext(Context);
 
     useEffect(() => {
-        store.getArtists();
+        store.getAlbums();
     }, [store])
 
     return (
@@ -36,11 +35,11 @@ const Artist = () => {
                 )
                 : (
                     <>
-                        <Typography sx={{marginLeft: 1}} component="div" variant="h5">Artists</Typography>
+                        <Typography sx={{marginLeft: 1}} component="div" variant="h5">Albums</Typography>
                         <Box sx={{display: 'flex', flexWrap: 'wrap', marginBottom: 4}}>
-                            {store.artists.map(artist => (
+                            {store.albums.map(album => (
                                 <ArtistStack
-                                    key={artist.id}
+                                    key={album.id}
                                     sx={{
                                         m: 1,
                                         '& > :not(style)': {
@@ -50,11 +49,11 @@ const Artist = () => {
                                         },
                                     }}
                                 >
-                                    <Paper component={Link} to={`/artist/${artist.id}`} sx={{marginBottom: "10px"}}>
-                                        <img className="artist_img" src={artist.artist_picture} alt="Artist"/>
+                                    <Paper sx={{marginBottom: "10px"}}>
+                                        <img className="album_img" src={album.album_picture} alt="Artist"/>
                                     </Paper>
                                     <Typography sx={{fontWeight: 600}}>
-                                        {artist.artist_name}
+                                        {album.album_title}
                                     </Typography>
                                 </ArtistStack>
                             ))}
@@ -63,7 +62,7 @@ const Artist = () => {
                 )
             }
         </>
-    )
-}
+    );
+};
 
-export default observer(Artist)
+export default observer(Albums);

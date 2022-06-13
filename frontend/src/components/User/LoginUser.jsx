@@ -18,9 +18,9 @@ import {
 import AccountCircle from "@mui/icons-material/AccountCircle";
 
 const LoginUser = () => {
+    const {store} = useContext(Context);
     const [loginUser, setLoginUser] = useState({email: "", password: ""});
     const [userError, setUserError] = useState({});
-    const {store} = useContext(Context);
     const history = useNavigate()
 
     const handleChange = (e) => {
@@ -33,9 +33,10 @@ const LoginUser = () => {
         console.log("Func was activated");
         store.login(loginUser.email, loginUser.password)
             .then((response) => {
-                if (response.status === 201) {
+                console.log(response)
+                if (response.status === 200) {
                     setLoginUser({email: "", password: ""})
-                    history("/")
+                    history("/home")
                 } else {
                     const obj = {}
                     const data = response.response.data

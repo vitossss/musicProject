@@ -6,7 +6,9 @@ import {observer} from "mobx-react-lite";
 import {
     AppBar,
     Box, Grid,
-    IconButton, Menu, MenuItem, TextField,
+    IconButton,
+    Menu,
+    MenuItem,
     Typography
 } from "@mui/material";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';

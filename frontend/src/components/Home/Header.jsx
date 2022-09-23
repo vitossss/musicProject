@@ -1,5 +1,6 @@
-import React, {useContext} from "react";
-import {Link} from "react-router-dom";
+import React from "react";
+import {useContext} from "react";
+import {Link, useNavigate} from "react-router-dom";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
 
@@ -26,13 +27,20 @@ import {
 } from './CustomStyles';
 import PopupState, {bindMenu, bindTrigger} from "material-ui-popup-state";
 
-const Header = () => {
+const Header = ({query, setQuery}) => {
     const {store} = useContext(Context);
+    const history = useNavigate()
 
     const handleLogout = (popupState) => {
         store.logout()
         // eslint-disable-next-line no-unused-expressions
         popupState.close
+    }
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            history('/search')
+        }
     }
 
     return (
@@ -58,6 +66,9 @@ const Header = () => {
                                     <SearchIcon/>
                                 </SearchIconWrapper>
                                 <StyledInputBase
+                                    value={query}
+                                    onChange={(e) => setQuery(e.target.value)}
+                                    onKeyPress={handleKeyPress}
                                     placeholder="Search…"
                                     inputProps={{"aria-label": "search"}}
                                 />

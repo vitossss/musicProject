@@ -77,6 +77,14 @@ class Album(models.Model):
         return self.album_title
 
 
+class Playlist(models.Model):
+    title = models.CharField(verbose_name='Title', max_length=50)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+
 class Track(models.Model):
     track_title = models.CharField(verbose_name='Title', max_length=255)
     track_url = models.URLField(max_length=255)
@@ -84,6 +92,7 @@ class Track(models.Model):
                                       max_length=100, null=True, blank=True)
     artist = models.ManyToManyField(Artist)
     album = models.ForeignKey(Album, on_delete=models.CASCADE, null=True, blank=True)
+    playlist = models.ManyToManyField(Playlist, null=True, blank=True)
 
     def __str__(self):
         return self.track_title

@@ -1,35 +1,35 @@
 import React from 'react';
 import "../../index.css";
+import {observer} from "mobx-react-lite";
 import {useEffect, useContext} from 'react';
 import {Context} from "../../index";
-import {observer} from "mobx-react-lite";
-import {Box, IconButton, Typography} from "@mui/material";
-import AddMenu from "../UI/AddMenu"
 import {useParams} from "react-router-dom";
+import AddMenu from "../UI/AddMenu"
+import {Box, IconButton, Typography} from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import PlayArrowRounded from "@mui/icons-material/PlayArrowRounded";
 
-const ArtistPage = ({handleLiked, setTrackId}) => {
+const AlbumPage = ({handleLiked, setTrackId}) => {
     const {store} = useContext(Context)
     const params = useParams()
-    const artistId = params.id
+    const albumId = params.id
 
     useEffect(() => {
-        store.getArtistTracks(artistId);
-        store.getArtist(artistId);
-    }, [artistId, store])
+        store.getAlbumTracks(albumId)
+        store.getAlbum(albumId)
+    }, [albumId, store])
 
     return (
         <Box>
             <Box sx={{height: 300, background: "linear-gradient(#565ce1, #7b7fe2)",
                 display: "flex", alignItems: "center"}}>
                 <Box sx={{ml: 3}}>
-                    <img className="robi" src={store.artist.artist_picture} alt="Artist" />
+                    <img className="robi" src={store.album.album_picture} alt="Album" />
                 </Box>
                 <Box sx={{ml: 4}}>
                     <Typography variant="h1" sx={{textTransform: "uppercase", fontWeight: 700, color: "#fff"}}>
-                        {store.artist.artist_name}
+                        {store.album.album_title}
                     </Typography>
                 </Box>
             </Box>
@@ -47,7 +47,7 @@ const ArtistPage = ({handleLiked, setTrackId}) => {
                     </IconButton>
                 </Box>
                 <Box sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-                    {store.artist_tracks.map((track) => (
+                    {store.album_tracks.map((track) => (
                         <Box key={track.id} sx={{width: 1200, display: "flex", justifyContent: "space-between",
                             padding: "10px 15px", borderRadius: "5px", mb: 1,
                             "&:hover": {
@@ -94,4 +94,4 @@ const ArtistPage = ({handleLiked, setTrackId}) => {
     );
 };
 
-export default observer(ArtistPage);
+export default observer(AlbumPage);

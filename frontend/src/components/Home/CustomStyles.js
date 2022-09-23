@@ -1,4 +1,4 @@
-import {styled, alpha, InputBase, Button, Toolbar, Box, List, ListItem, Stack} from '@mui/material'
+import {styled, alpha, InputBase, Button, Toolbar, Box, List, ListItem, Stack, Typography} from '@mui/material'
 
 export const Search = styled("div")(({theme}) => ({
     position: "relative",
@@ -24,15 +24,13 @@ export const SearchIconWrapper = styled("div")(({theme}) => ({
 
 export const StyledInputBase = styled(InputBase)(({theme}) => ({
     color: "inherit",
+    width: "100%",
     "& .MuiInputBase-input": {
         padding: theme.spacing(1, 1, 1, 0),
         // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create("width"),
-        width: "100%",
-        [theme.breakpoints.up("md")]: {
-            width: "20ch",
-        },
+        width: "100%"
     },
 }));
 
@@ -88,3 +86,31 @@ export const DashboardBox = styled(Box)(() => ({
     justifyContent: "center",
     alignItems: "center"
 }));
+
+export const Widget = styled('div')(({theme}) => ({
+    padding: 16,
+    width: "100%",
+    zIndex: 1,
+    backgroundColor: "#262626",
+    display: "flex",
+}));
+
+export const CoverImage = styled('div')({
+    width: 100,
+    height: 100,
+    objectFit: 'cover',
+    overflow: 'hidden',
+    flexShrink: 0,
+    borderRadius: 8,
+    backgroundColor: 'rgba(0,0,0,0.08)',
+    '& > img': {
+        width: '100%',
+    },
+});
+
+export const TinyText = styled(Typography)({
+    fontSize: '1rem',
+    opacity: 0.5,
+    fontWeight: 500,
+    letterSpacing: 0.2,
+});

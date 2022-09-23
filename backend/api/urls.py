@@ -3,25 +3,18 @@ from . import views
 
 urlpatterns = [
     path('artists/', views.ArtistAPI.as_view()),
+    path('artists/<int:pk>', views.ArtistOneAPI.as_view()),
+    path('artists/<int:artist_id>/tracks', views.ArtistTracksAPI.as_view()),
     path('albums/', views.AlbumAPI.as_view()),
-    path('albums/create/', views.AlbumCreateAPI.as_view()),
-    path('albums/<int:pk>/', views.AlbumGetUpdateAPI.as_view()),
-    path('albums/<int:pk>/update/', views.AlbumGetUpdateAPI.as_view()),
-    path('albums/<int:pk>/delete/', views.AlbumDeleteAPI.as_view()),
+    path('albums/<int:pk>', views.AlbumOneAPI.as_view()),
+    path('albums/<int:album_id>/tracks', views.AlbumTracksAPI.as_view()),
+    path('playlists/', views.PlaylistAPI.as_view()),
+    path('playlists/create', views.PlaylistCreateAPI.as_view()),
+    path('playlists/<int:playlist_id>/delete', views.PlaylistDeleteAPI.as_view()),
+    path('playlists/<int:pk>', views.PlaylistOneAPI.as_view()),
+    path('playlists/<int:playlist_id>/tracks', views.PlaylistTracksAPI.as_view()),
+    path('playlists/<int:playlist_id>/<int:track_id>', views.PlaylistAddTrackAPI.as_view()),
     path('tracks/', views.TrackAPI.as_view()),
-    path('tracks/<int:pk>/update/', views.TrackGetUpdateAPI.as_view()),
-    path('tracks/<int:pk>/delete/', views.TrackDeleteAPI.as_view()),
-    path('likes/', views.LikeAPI.as_view()),
-    path('likes/create/', views.LikeCreateAPI.as_view()),
-    path('likes/<int:pk>/update/', views.LikeGetUpdateAPI.as_view()),
-    path('likes/<int:pk>/delete/', views.LikeDeleteAPI.as_view()),
+    path('tracks/<int:track_id>/like', views.TrackLikeAPI.as_view()),
+    path('likes/', views.LikeAPI.as_view())
 ]
-
-
-
-
-    # path('tracks/create/', views.TrackCreateAPI.as_view()),
-    # path('artists/<int:pk>', views.AlbumGetUpdateAPI.as_view()),
-    # path('artists/create/', views.ArtistCreateAPI.as_view()),
-    # path('artists/<int:pk>/update/', views.ArtistUpdateAPI.as_view()),
-    # path('artists/<int:pk>/delete/', views.ArtistDeleteAPI.as_view()),

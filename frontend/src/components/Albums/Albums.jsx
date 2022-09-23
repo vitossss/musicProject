@@ -1,11 +1,12 @@
 import React from 'react';
 import  "../../index.css"
+import {observer} from "mobx-react-lite";
 import {useContext, useEffect} from "react";
 import {Context} from "../../index";
-import {ArtistStack} from "../Home/CustomStyles";
+import {Link} from "react-router-dom";
 import Loading from "../UI/Loading";
+import {ArtistStack} from "../Home/CustomStyles";
 import {Box, Paper, Typography} from "@mui/material";
-import {observer} from "mobx-react-lite";
 
 const Albums = () => {
     const {store} = useContext(Context);
@@ -49,7 +50,7 @@ const Albums = () => {
                                         },
                                     }}
                                 >
-                                    <Paper sx={{marginBottom: "10px"}}>
+                                    <Paper component={Link} to={`/album/${album.id}`} sx={{marginBottom: "10px"}}>
                                         <img className="album_img" src={album.album_picture} alt="Artist"/>
                                     </Paper>
                                     <Typography sx={{fontWeight: 600}}>
